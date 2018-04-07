@@ -1,3 +1,4 @@
 # Craft React
 
-React for UI. Craft 3 for content.
+- Craft for content.
+- React for UI.

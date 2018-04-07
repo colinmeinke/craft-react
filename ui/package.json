@@ -1,0 +1,14 @@
+{
+  "author": "Colin Meinke <hello@colinmeinke.com>",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "license": "MIT",
+  "main": "server.js",
+  "name": "craft-react",
+  "repository": "git@github.com:colinmeinke/craft-react.git",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "version": "0.0.0"
+}

@@ -1,3 +1,4 @@
+import config from './config'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
@@ -28,8 +29,8 @@ class Page extends React.Component {
   }
 }
 
-const Home = () => <Page url="http://api.craft-react.test/home.json" />
-const About = () => <Page url="http://api.craft-react.test/about.json" />
+const Home = () => <Page url={ `${config.apiUrl}/home.json` } />
+const About = () => <Page url={ `${config.apiUrl}/about.json` } />
 
 const App = () => (
   <Router>

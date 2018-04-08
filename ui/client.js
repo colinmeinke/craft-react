@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 class Page extends React.Component {
   constructor(props) {
@@ -27,7 +28,21 @@ class Page extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <Page url="http://api.craft-react.test/home.json" />,
-  document.getElementById('app')
+const Home = () => <Page url="http://api.craft-react.test/home.json" />
+const About = () => <Page url="http://api.craft-react.test/about.json" />
+
+const App = () => (
+  <Router>
+    <div>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+      </nav>
+
+      <Route exact path="/" component={ Home } />
+      <Route path="/about" component={ About } />
+    </div>
+  </Router>
 )
+
+ReactDOM.render(<App />, document.getElementById('app'))

@@ -1,9 +1,6 @@
-import config from './config'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import React, { Component } from 'react'
 
-class Page extends React.Component {
+class Page extends Component {
   constructor(props) {
     super(props)
     this.state = { loading: true, failed: false, title: null, content: null }
@@ -52,21 +49,4 @@ class Page extends React.Component {
   }
 }
 
-const Home = () => <Page url={ `${config.apiUrl}/home.json` } />
-const About = () => <Page url={ `${config.apiUrl}/about.json` } />
-
-const App = () => (
-  <Router>
-    <div>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-      </nav>
-
-      <Route exact path="/" component={ Home } />
-      <Route path="/about" component={ About } />
-    </div>
-  </Router>
-)
-
-ReactDOM.render(<App />, document.getElementById('app'))
+export default Page

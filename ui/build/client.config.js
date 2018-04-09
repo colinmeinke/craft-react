@@ -1,9 +1,9 @@
 const path = require('path')
 
 module.exports = {
-  entry: './client.js',
+  entry: './src/client.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../web'),
     filename: 'app.js'
   },
   module: {
@@ -12,10 +12,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [ '@babel/preset-react', '@babel/preset-env' ]
-          }
+          loader: 'babel-loader'
         }
       }
     ]

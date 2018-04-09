@@ -1,5 +1,38 @@
 {
   "author": "Colin Meinke <hello@colinmeinke.com>",
+  "babel": {
+    "env": {
+      "client": {
+        "presets": [
+          "@babel/preset-react",
+          [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "browsers": [
+                  "last 2 versions",
+                  "not ie <= 11"
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "server": {
+        "presets": [
+          "@babel/preset-react",
+          [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ]
+      }
+    }
+  },
   "dependencies": {
     "express": "^4.16.3",
     "react": "^16.3.1",
@@ -11,16 +44,22 @@
   "name": "craft-react",
   "repository": "git@github.com:colinmeinke/craft-react.git",
   "scripts": {
-    "build": "webpack",
-    "start": "node server.js"
+    "build": "yarn tidy && yarn build:client && yarn build:server",
+    "build:client": "BABEL_ENV=client webpack --config build/client.config.js",
+    "build:server": "BABEL_ENV=server webpack --config build/server.config.js",
+    "dev": "yarn install && yarn build && yarn start",
+    "start": "node index.js",
+    "tidy": "rm -rf web index.js"
   },
   "version": "0.0.0",
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.44",
     "@babel/core": "^7.0.0-beta.44",
     "@babel/preset-env": "^7.0.0-beta.44",
     "@babel/preset-react": "^7.0.0-beta.44",
     "babel-loader": "^8.0.0-beta",
     "webpack": "^4.5.0",
-    "webpack-cli": "^2.0.14"
+    "webpack-cli": "^2.0.14",
+    "webpack-node-externals": "^1.7.2"
   }
 }

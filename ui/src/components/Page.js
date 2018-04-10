@@ -22,6 +22,7 @@ class Page extends Component {
         return res.json()
       })
       .then(({ title, content }) => {
+        document.title = title
         this.setState({ loading: false, title, content })
       })
       .catch(() => this.setState({ loading: false, failed: true }))

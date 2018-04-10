@@ -17,16 +17,16 @@ return [
         'securityKey' => getenv('SECURITY_KEY'),
     ],
     'dev' => [
-        'uiUrl' => 'http://craft-react.test',
+        'uiOrigin' => 'http://craft-react.test',
         'siteUrl' => null,
         'devMode' => true,
     ],
     'staging' => [
-        'uiUrl' => null,
+        'uiOrigin' => null,
         'siteUrl' => null,
     ],
     'production' => [
-        'uiUrl' => null,
+        'uiOrigin' => null,
         'siteUrl' => null,
     ],
 ];

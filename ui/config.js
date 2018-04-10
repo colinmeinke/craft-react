@@ -1,3 +1,15 @@
+const apiPath = path => {
+  switch (path) {
+    case '/':
+      return 'home.json'
+    case '/about':
+      return 'about.json'
+    default:
+      return '404.json'
+  }
+}
+
 export default {
-  apiUrl: 'http://api.craft-react.test'
+  apiOrigin: 'http://api.craft-react.test',
+  apiPath
 }

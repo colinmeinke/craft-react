@@ -3,9 +3,6 @@ import Page from './Page'
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
 
-const Home = () => <Page url={ `${config.apiUrl}/home.json` } />
-const About = () => <Page url={ `${config.apiUrl}/about.json` } />
-
 const App = () => (
   <div>
     <nav>
@@ -13,8 +10,13 @@ const App = () => (
       <Link to="/about">About</Link>
     </nav>
 
-    <Route exact path="/" component={ Home } />
-    <Route path="/about" component={ About } />
+    <Route path="*" render={({ location, staticContext }) => (
+      <Page
+        url={ `${config.apiOrigin}/${config.apiPath(location.pathname)}` }
+        title={staticContext ? staticContext.title : undefined}
+        content={staticContext ? staticContext.content : undefined}
+      />
+    )} />
   </div>
 )
 

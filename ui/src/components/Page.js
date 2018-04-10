@@ -1,19 +1,8 @@
 import React, { Component } from 'react'
 
 class Page extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { loading: true, failed: false, title: null, content: null }
-  }
-
-  componentDidMount() {
-    this.controller = {}
-
-    if ("AbortController" in self) {
-      this.controller = new AbortController()
-    }
-
-    fetch(this.props.url, { signal: this.controller.signal })
+  static fetchContent(url, signal) {
+    return fetch(url, { signal })
       .then(res => {
         if (res.status !== 200) {
           throw new Error()
@@ -21,15 +10,39 @@ class Page extends Component {
 
         return res.json()
       })
-      .then(({ title, content }) => {
-        document.title = title
-        this.setState({ loading: false, title, content })
-      })
-      .catch(() => this.setState({ loading: false, failed: true }))
+      .then(({ title, content }) => ({ title, content }))
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      loading: typeof props.title === 'undefined',
+      failed: false,
+      title: props.title,
+      content: props.content
+    }
+  }
+
+  componentDidMount() {
+    this.controller = {}
+
+    if (this.state.loading) {
+      if ("AbortController" in self) {
+        this.controller = new AbortController()
+      }
+
+      Page.fetchContent(this.props.url, this.controller.signal)
+        .then(({ title, content }) => {
+          document.title = title
+          this.setState({ loading: false, title, content })
+        })
+        .catch(() => this.setState({ loading: false, failed: true }))
+    }
   }
 
   componentWillUnmount() {
-    if (this.controller.abort === 'function') {
+    if (typeof this.controller.abort === 'function') {
       this.controller.abort()
     }
   }

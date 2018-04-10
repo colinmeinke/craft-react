@@ -7,7 +7,7 @@ use craft\helpers\HeaderHelper;
 $pageTransformer = function(Entry $entry) {
     \Craft::$app->response->headers->set(
         'Access-Control-Allow-Origin',
-        \Craft::$app->config->general->uiUrl
+        \Craft::$app->config->general->uiOrigin
     );
 
     return [
@@ -32,5 +32,12 @@ return [
             'transformer' => $pageTransformer,
             'pretty' => true,
         ],
+        '404.json' => [
+            'elementType' => Entry::class,
+            'criteria' => ['section' => 'error404'],
+            'one' => true,
+            'transformer' => $pageTransformer,
+            'pretty' => true,
+        ]
     ],
 ];

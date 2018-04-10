@@ -1,5 +1,6 @@
 const path = require('path')
 const externals = require('webpack-node-externals')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/server.js',
@@ -25,5 +26,10 @@ module.exports = {
   },
   mode: 'development',
   target: 'node',
-  externals: [ externals() ]
+  externals: [ externals() ],
+  plugins: [
+    new webpack.ProvidePlugin({
+      fetch: 'node-fetch'
+    })
+  ]
 }

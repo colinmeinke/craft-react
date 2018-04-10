@@ -1,0 +1,13 @@
+{
+  "author": "Colin Meinke <hello@colinmeinke.com>",
+  "license": "MIT",
+  "main": "ui/index.js",
+  "name": "craft-react",
+  "repository": "git@github.com:colinmeinke/craft-react.git",
+  "scripts": {
+    "ui:build": "cd ui && yarn build",
+    "ui:dev": "cd ui && yarn dev",
+    "ui:start": "cd ui && yarn start"
+  },
+  "version": "0.0.0"
+}

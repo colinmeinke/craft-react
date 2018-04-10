@@ -41,7 +41,7 @@
   },
   "license": "MIT",
   "main": "index.js",
-  "name": "craft-react",
+  "name": "craft-react-ui",
   "repository": "git@github.com:colinmeinke/craft-react.git",
   "scripts": {
     "build": "yarn tidy && yarn build:client && yarn build:server",

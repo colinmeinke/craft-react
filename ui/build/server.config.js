@@ -19,11 +19,6 @@ module.exports = {
       }
     ]
   },
-  externals: {
-    express: 'express',
-    path: 'path',
-    react: 'node_modules/react'
-  },
   mode: 'development',
   target: 'node',
   externals: [ externals() ],

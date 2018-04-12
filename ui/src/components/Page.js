@@ -1,6 +1,24 @@
 import React, { Component } from 'react'
 
 class Page extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.title === state.title && props.content === state.content) {
+      return null
+    }
+
+    return {
+      loading: typeof props.title === 'undefined',
+      failed: false,
+      title: props.title,
+      content: props.content
+    }
+  }
+
   static fetchContent(url, signal) {
     return fetch(url, { signal })
       .then(res => {
@@ -10,21 +28,9 @@ class Page extends Component {
 
         return res.json()
       })
-      .then(({ title, content }) => ({ title, content }))
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      loading: typeof props.title === 'undefined',
-      failed: false,
-      title: props.title,
-      content: props.content
-    }
-  }
-
-  componentDidMount() {
+  fetchContentIfRequired() {
     this.controller = {}
 
     if (this.state.loading) {
@@ -39,6 +45,14 @@ class Page extends Component {
         })
         .catch(() => this.setState({ loading: false, failed: true }))
     }
+  }
+
+  componentDidMount() {
+    this.fetchContentIfRequired()
+  }
+
+  componentDidUpdate() {
+    this.fetchContentIfRequired()
   }
 
   componentWillUnmount() {

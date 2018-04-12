@@ -1,31 +1,46 @@
 import config from '../../config'
 import Page from './Page'
-import React from 'react'
-import { Route, Link } from 'react-router-dom'
+import React, { Component } from 'react'
+import { Switch, Route, Link } from 'react-router-dom'
 
-const App = () => (
-  <div>
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-    </nav>
+class App extends Component {
+  componentDidMount() {
+    window.__INITIAL_CONTEXT__ = undefined
+  }
 
-    <Route path="*" render={({ location, staticContext }) => {
-      const title = staticContext
-        ? staticContext.title
-        : undefined
+  render() {
+    return (
+      <div>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+        </nav>
 
-      const content = staticContext
-        ? staticContext.content
-        : undefined
+        <Switch>
+          <Route exact path="/" render={({ staticContext }) => (
+            <Page
+              url={ `${config.apiOrigin}/${config.apiPath('/')}` }
+              { ...(staticContext || window.__INITIAL_CONTEXT__ || {}) }
+            />
+          )} />
 
-      return <Page
-        url={ `${config.apiOrigin}/${config.apiPath(location.pathname)}` }
-        title={title}
-        content={content}
-      />
-    }} />
-  </div>
-)
+          <Route path="/about" render={({ staticContext }) => (
+            <Page
+              url={ `${config.apiOrigin}/${config.apiPath('/about')}` }
+              { ...(staticContext || window.__INITIAL_CONTEXT__ || {}) }
+            />
+          )} />
+
+          <Route render={({ staticContext }) => (
+            <Page
+              url={ `${config.apiOrigin}/${config.apiPath('/404')}` }
+              { ...(staticContext || window.__INITIAL_CONTEXT__ || {}) }
+            />
+          )} />
+        </Switch>
+      </div>
+    )
+  }
+}
 
 export default App

@@ -12,7 +12,11 @@ const server = express()
 server.use(express.static('web'))
 
 server.get('*', async (req, res) => {
-  const { title, content } = await Page.fetchContent(
+  if (req.path.includes('favicon')) {
+    return res.status(404).send('not found')
+  }
+
+  const initialContext = await Page.fetchContent(
     `${config.apiOrigin}/${config.apiPath(req.path)}`
   )
 
@@ -20,14 +24,17 @@ server.get('*', async (req, res) => {
     <!doctype html>
     <html>
       <head>
-        <title>${title}</title>
+        <title>${initialContext.title}</title>
       </head>
       <body>
         <div id="app">${renderToString(
-          <Router location={req.url} context={{ title, content }}>
+          <Router location={req.url} context={initialContext}>
             <App />
           </Router>
         )}</div>
+        <script>
+          window.__INITIAL_CONTEXT__ = ${JSON.stringify(initialContext)}
+        </script>
         <script src="/app.js"></script>
       </body>
     </html>

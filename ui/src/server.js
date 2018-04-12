@@ -19,7 +19,9 @@ server.get('*', async (req, res) => {
   const html = `
     <!doctype html>
     <html>
-      <head></head>
+      <head>
+        <title>${title}</title>
+      </head>
       <body>
         <div id="app">${renderToString(
           <Router location={req.url} context={{ title, content }}>

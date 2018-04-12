@@ -10,13 +10,21 @@ const App = () => (
       <Link to="/about">About</Link>
     </nav>
 
-    <Route path="*" render={({ location, staticContext }) => (
-      <Page
+    <Route path="*" render={({ location, staticContext }) => {
+      const title = staticContext
+        ? staticContext.title
+        : undefined
+
+      const content = staticContext
+        ? staticContext.content
+        : undefined
+
+      return <Page
         url={ `${config.apiOrigin}/${config.apiPath(location.pathname)}` }
-        title={staticContext ? staticContext.title : undefined}
-        content={staticContext ? staticContext.content : undefined}
+        title={title}
+        content={content}
       />
-    )} />
+    }} />
   </div>
 )
 
